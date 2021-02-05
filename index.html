@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>Mathanim</title>
+        <link
+            rel="stylesheet"
+            href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+            integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+            crossorigin="anonymous"
+        />
+        <link
+            rel="stylesheet"
+            href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+            integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
+            crossorigin="anonymous"
+        />
+        <link
+            href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="styles.css" />
+    </head>
+
+    <body>
+        <canvas id="confetti"></canvas>
+
+        <div class="title-container">
+            <div class="title">Mathanim.</div>
+        </div>
+
+        <div class="scene">
+            <div class="carousel" id="carousel">
+                <video loop class="carousel-cell" id="main-video">
+                    <source src="./assets/t2.mp4" type="video/mp4" />
+                </video>
+
+                <video loop class="carousel-cell" id="main-video">
+                    <source src="./assets/t3.mp4" type="video/mp4" />
+                </video>
+
+                <video loop class="carousel-cell" id="main-video">
+                    <source src="./assets/t4.mp4" type="video/mp4" />
+                </video>
+
+                <video loop class="carousel-cell">
+                    <source src="./assets/cauchy_circles.mp4" type="video/mp4" />
+                </video>
+
+                <video loop class="carousel-cell">
+                    <source src="./assets/penta.mp4" type="video/mp4" />
+                </video>
+
+                <video loop class="carousel-cell">
+                    <source src="./assets/lij.mp4" type="video/mp4" />
+                </video>
+
+                <video loop class="carousel-cell">
+                    <source src="./assets/toaster10.mp4" type="video/mp4" />
+                </video>
+
+                <video loop class="carousel-cell">
+                    <source src="./assets/toaster.mp4" type="video/mp4" />
+                </video>
+
+                <video loop class="carousel-cell">
+                    <source src="./assets/zoom.mp4" type="video/mp4" />
+                </video>
+            </div>
+        </div>
+
+        <div class="side-left">
+            <image src="./assets/legendre.jpg" class="image"> </image>
+            <div class="description">Legendre</div>
+        </div>
+
+        <div class="side-right">
+            <image src="./assets/fourier.jpg" class="image"> </image>
+            <div class="description">Fourier</div>
+        </div>
+
+        <div class="start-container">
+            <button class="btn-prime" id="start-btn">Click</button>
+            <div class="rotate-container">
+                <button id="rotate-btn" class="btn-second">Rotate</button>
+                <button id="transpose-btn" class="btn-second">Transpose</button>
+                <button id="shuffle-btn" class="btn-second">Shuffle</button>
+            </div>
+
+            <div class="video-controls">
+                <button id="play-btn" class="play-btn">
+                    <i class="fas fa-play-circle"></i>
+                </button>
+            </div>
+        </div>
+    </body>
+    <script type="module" src="script.js"></script>
+    <script
+        src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"
+    ></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"
+    ></script>
+    <script
+        src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"
+    ></script>
+</html>
