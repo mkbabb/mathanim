@@ -4,13 +4,14 @@ const confettiSettings = { target: "confetti" };
 const confetti = new ConfettiGenerator(confettiSettings);
 
 let cellStyle = getComputedStyle(document.getElementById("main-video"));
-let CELL_WIDTH = parseInt(cellStyle.width.replace("px", "")) + 100;
-let CELL_HEIGHT = parseInt(cellStyle.height.replace("px", "")) + 100;
+let cellMargin = 10;
+let cellWidth = parseInt(cellStyle.width.replace("px", "")) + cellMargin;
+let cellHeight = parseInt(cellStyle.height.replace("px", "")) + cellMargin;
 
 const SHUFFLE_COUNT = 3;
 var index = 0;
 var axis = "Y";
-var cellAxis = CELL_WIDTH;
+var cellAxis = cellWidth;
 
 function sleep(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
@@ -24,18 +25,29 @@ function rollCarousel() {
     let carousel = document.getElementById("carousel");
     let cellCount = carousel.children.length;
     let alpha = (2 * Math.PI) / cellCount;
-    let radius = ~~((cellAxis / 2) * (1 / Math.tan(Math.PI / cellCount)));
+    let radius = Math.floor((cellAxis / 2) * (1 / Math.tan(Math.PI / cellCount)));
+
+    let tilt = 10;
+    let tiltYOffset = radius * Math.sin((tilt * Math.PI) / 180);
+
+    Object.assign(carousel.style, {
+        transform: `translateY(-${tiltYOffset}px) rotateX(-${tilt}deg)`,
+    });
 
     for (let i = 0; i < carousel.children.length; i++) {
-        let alpha_i = alpha * (i - index);
         let child = carousel.children[i];
-        child.style.transform = `rotate${axis}(${alpha_i}rad) translateZ(${radius}px)`;
+        let childAngle = alpha * (i - index);
+
+        child.style.transform = `rotate${axis}(${childAngle}rad) translateZ(${radius}px)`;
+
         if (i === index % cellCount) {
             child.setAttribute("id", "main-video");
             child.style.opacity = `1`;
         } else {
+            // let opacity = Math.floor(100 / Math.cos(childAngle));
+            let opacity = 50;
             child.setAttribute("id", "");
-            child.style.opacity = `${~~(1 / Math.cos(alpha_i))}%`;
+            child.style.opacity = `${opacity}%`;
         }
     }
     index++;
@@ -45,12 +57,11 @@ function transposeCarousel() {
     let carousel = document.getElementById("carousel");
     let cellCount = carousel.children.length;
     let radius = (cellAxis / 2) * (1 / Math.tan(Math.PI / cellCount));
-
     if (axis == "X") {
-        cellAxis = CELL_WIDTH;
+        cellAxis = cellWidth;
         axis = "Y";
     } else {
-        cellAxis = CELL_HEIGHT;
+        cellAxis = cellHeight;
         axis = "X";
     }
     radius = (cellAxis / 2) * (1 / Math.tan(Math.PI / cellCount));
@@ -106,12 +117,23 @@ document.getElementById("start-btn").addEventListener("click", function (event) 
     shuffleCells();
     toggleOnce(button, function (el) {
         confetti.render();
-        document.querySelector(".rotate-container").style.transform =
-            "translateY(150%)";
-        document.querySelector(".video-controls").style.transform = "translateY(-300%)";
 
-        document.querySelector(".side-left").style.transform = "translateX(0)";
-        document.querySelector(".side-right").style.transform = "translateX(0)";
+        Object.assign(document.querySelector(".rotate-container").style, {
+            transform: "translateY(0%)",
+            opacity: "100%",
+        });
+        Object.assign(document.querySelector("#start-btn").style, {
+            display: "none",
+        });
+
+        // document.querySelector(".video-controls").style.transform = "translateY(-300%)";
+
+        Object.assign(document.querySelector(".left").style, {
+            opacity: "100%",
+        });
+        Object.assign(document.querySelector(".right").style, {
+            opacity: "100%",
+        });
 
         setTimeout(function () {
             document.querySelector(".side-left .image").classList.add("floating");
