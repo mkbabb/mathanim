@@ -14,3 +14,4 @@ __pycache__/
 log/
 _*
 assets/
+node_modules/

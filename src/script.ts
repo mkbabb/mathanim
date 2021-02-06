@@ -1,9 +1,9 @@
-import { ConfettiGenerator } from "./confetti.js";
+import { ConfettiGenerator } from "confetti-js/src/confetti.js";
 
 const confettiSettings = { target: "confetti" };
 const confetti = new ConfettiGenerator(confettiSettings);
 
-let cellStyle = getComputedStyle(document.getElementById("main-video"));
+let cellStyle = window.getComputedStyle(document.getElementById("main-video"));
 let cellMargin = 10;
 let cellWidth = parseInt(cellStyle.width.replace("px", "")) + cellMargin;
 let cellHeight = parseInt(cellStyle.height.replace("px", "")) + cellMargin;
@@ -18,9 +18,9 @@ function sleep(ms) {
 }
 
 function rollCarousel() {
-    let mainVideo = document.getElementById("main-video");
+    let mainVideo = <HTMLVideoElement>document.getElementById("main-video");
     mainVideo.pause();
-    mainVideo.setAttribute("toggled", false);
+    mainVideo.setAttribute("toggled", "false");
 
     let carousel = document.getElementById("carousel");
     let cellCount = carousel.children.length;
@@ -31,11 +31,10 @@ function rollCarousel() {
     let tiltYOffset = radius * Math.sin((tilt * Math.PI) / 180);
 
     Object.assign(carousel.style, {
-        transform: `translateY(-${tiltYOffset}px) rotateX(-${tilt}deg)`,
+        transform: `translateY(-${tiltYOffset}px) rotateX(-${tilt}deg)`
     });
 
-    for (let i = 0; i < carousel.children.length; i++) {
-        let child = carousel.children[i];
+    carousel.childNodes.forEach((child, index) => {
         let childAngle = alpha * (i - index);
 
         child.style.transform = `rotate${axis}(${childAngle}rad) translateZ(${radius}px)`;
@@ -49,7 +48,7 @@ function rollCarousel() {
             child.setAttribute("id", "");
             child.style.opacity = `${opacity}%`;
         }
-    }
+    });
     index++;
 }
 
@@ -120,19 +119,17 @@ document.getElementById("start-btn").addEventListener("click", function (event) 
 
         Object.assign(document.querySelector(".rotate-container").style, {
             transform: "translateY(0%)",
-            opacity: "100%",
+            opacity: "100%"
         });
         Object.assign(document.querySelector("#start-btn").style, {
-            display: "none",
+            display: "none"
         });
-
-        // document.querySelector(".video-controls").style.transform = "translateY(-300%)";
 
         Object.assign(document.querySelector(".left").style, {
-            opacity: "100%",
+            opacity: "100%"
         });
         Object.assign(document.querySelector(".right").style, {
-            opacity: "100%",
+            opacity: "100%"
         });
 
         setTimeout(function () {
