@@ -26,6 +26,8 @@
     "typescript-eslint": "^0.0.1-alpha.0"
   },
   "dependencies": {
-    "confetti-js": "^0.0.18"
+    "@mkbabb/animation": "github:mkbabb/animation.js",
+    "confetti-js": "^0.0.18",
+    "yajr": "github:mkbabb/yajr"
   }
 }

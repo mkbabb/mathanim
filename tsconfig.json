@@ -1,14 +1,16 @@
 {
     "compilerOptions": {
-        "target": "ES2020",
-        "sourceMap": false,
-        "module": "ESNext",
+        "target": "ES6",
+        "sourceMap": true,
+        "module": "ES6",
         "lib": [
             "ESNext",
             "DOM",
         ],
         "alwaysStrict": true,
         "strict": false,
+        "moduleResolution": "classic",
+        "esModuleInterop": true,
     },
     "include": [
         "src/script.ts",
