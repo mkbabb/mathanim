@@ -8,15 +8,26 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { default as ConfettiGenerator } from "../node_modules/confetti-js/src/confetti.js";
-import { Carousel, sleep } from "./carousel.js";
+import { Carousel } from "./carousel.js";
+import { smoothAnimate } from "../node_modules/@mkbabb/animation/src/animation.js";
+import { easeInBounce } from "../node_modules/@mkbabb/animation/src/math.js";
+const title = document.querySelector(".title");
+smoothAnimate(100, 0, 1000, (v) => {
+    title.style.opacity = String(v);
+    return null;
+}, easeInBounce);
 const confettiSettings = { target: "confetti" };
 const confetti = new ConfettiGenerator(confettiSettings);
 const carouselSettings = {
     target: "#carousel",
+    xTilt: 20,
+    margin: 20,
     onfocus: (cell, i, angle) => {
+        cell.classList.add("focused");
         cell.play();
     },
     onunfocus: (cell, i, angle) => {
+        cell.classList.remove("focused");
         cell.pause();
     }
 };
@@ -48,9 +59,6 @@ document.getElementById("start-btn").addEventListener("click", (event) => __awai
         Object.assign(document.querySelector(".right").style, {
             opacity: "100%"
         });
-        yield sleep(500);
-        document.querySelector(".side-left .image").classList.add("floating");
-        document.querySelector(".side-right .image").classList.add("floating");
     }
 }));
 //# sourceMappingURL=script.js.map

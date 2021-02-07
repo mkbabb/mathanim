@@ -2,15 +2,39 @@ import { default as ConfettiGenerator } from "../node_modules/confetti-js/src/co
 
 import { Carousel, sleep } from "./carousel.js";
 
+import { smoothAnimate } from "../node_modules/@mkbabb/animation/src/animation.js";
+
+import { getOffset } from "../node_modules/@mkbabb/animation/src/utils.js";
+
+import { easeInBounce } from "../node_modules/@mkbabb/animation/src/math.js";
+
+const title = document.querySelector<HTMLElement>(".title");
+smoothAnimate(
+    100,
+    0,
+    1000,
+    (v) => {
+        title.style.opacity = String(v);
+        return null;
+    },
+    easeInBounce
+);
+
 const confettiSettings = { target: "confetti" };
 const confetti = new ConfettiGenerator(confettiSettings);
 
 const carouselSettings = {
     target: "#carousel",
+    xTilt: 20,
+    margin: 20,
     onfocus: (cell: HTMLVideoElement, i, angle) => {
+        cell.classList.add("focused");
+
         cell.play();
     },
     onunfocus: (cell: HTMLVideoElement, i, angle) => {
+        cell.classList.remove("focused");
+
         cell.pause();
     }
 };
@@ -50,10 +74,5 @@ document.getElementById("start-btn").addEventListener("click", async (event) => 
         Object.assign(document.querySelector<HTMLElement>(".right").style, {
             opacity: "100%"
         });
-
-        await sleep(500);
-
-        document.querySelector(".side-left .image").classList.add("floating");
-        document.querySelector(".side-right .image").classList.add("floating");
     }
 });

@@ -7,7 +7,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { getOffset } from "../node_modules/@mkbabb/animation/src/utils.js";
 export function sleep(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
 }
@@ -29,28 +28,25 @@ export class Carousel {
         this.index = 0;
         this.margin = (_f = settings.margin) !== null && _f !== void 0 ? _f : 10;
     }
-    getCellAxis() {
-        const offset = getOffset(this.target);
+    getCellWidth() {
         if (this.axis == "X") {
-            return offset.height + this.margin;
+            return this.target.offsetHeight + this.margin;
         }
         else {
-            return offset.width + this.margin;
+            return this.target.offsetWidth + this.margin;
         }
     }
-    getAlpha() {
+    calcAngle() {
         const cellCount = this.target.children.length;
         return (2 * Math.PI) / cellCount;
     }
-    getRadius() {
-        const cellAxis = this.getCellAxis();
-        const cellCount = this.target.children.length;
-        return Math.floor((cellAxis / 2) * (1 / Math.tan(Math.PI / cellCount)));
+    calcRadius(width) {
+        return Math.ceil((width / 2) * (1 / Math.tan(this.calcAngle() / 2)));
     }
     rollCarousel() {
         const cellCount = this.target.children.length;
-        const radius = this.getRadius();
-        const alpha = this.getAlpha();
+        const radius = this.calcRadius(this.getCellWidth());
+        const alpha = this.calcAngle();
         if (this.axis == "Y") {
             const tiltYOffset = radius * Math.sin(radians(this.xTilt));
             Object.assign(this.target.style, {
@@ -73,7 +69,7 @@ export class Carousel {
     }
     transposeCarousel() {
         this.axis = this.axis == "X" ? "Y" : "X";
-        const radius = this.getRadius();
+        const radius = this.calcRadius(this.getCellWidth());
         this.target.style.transform = `translateZ(${-radius}px)`;
         this.rollCarousel();
     }

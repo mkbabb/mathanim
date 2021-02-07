@@ -57,32 +57,27 @@ export class Carousel {
         this.margin = settings.margin ?? 10;
     }
 
-    getCellAxis(): number {
-        const offset = getOffset(this.target);
-
+    getCellWidth(): number {
         if (this.axis == "X") {
-            return offset.height + this.margin;
+            return this.target.offsetHeight + this.margin;
         } else {
-            return offset.width + this.margin;
+            return this.target.offsetWidth + this.margin;
         }
     }
 
-    getAlpha(): number {
+    calcAngle(): number {
         const cellCount = this.target.children.length;
         return (2 * Math.PI) / cellCount;
     }
 
-    getRadius(): number {
-        const cellAxis = this.getCellAxis();
-        const cellCount = this.target.children.length;
-
-        return Math.floor((cellAxis / 2) * (1 / Math.tan(Math.PI / cellCount)));
+    calcRadius(width: number): number {
+        return Math.ceil((width / 2) * (1 / Math.tan(this.calcAngle() / 2)));
     }
 
     rollCarousel(): void {
         const cellCount = this.target.children.length;
-        const radius = this.getRadius();
-        const alpha = this.getAlpha();
+        const radius = this.calcRadius(this.getCellWidth());
+        const alpha = this.calcAngle();
 
         if (this.axis == "Y") {
             const tiltYOffset = radius * Math.sin(radians(this.xTilt));
@@ -98,7 +93,6 @@ export class Carousel {
             const style = {
                 transform: `rotate${this.axis}(${childAngle}rad) translateZ(${radius}px)`
             };
-
             Object.assign(child.style, style);
 
             if (i === this.index % cellCount) {
@@ -112,7 +106,7 @@ export class Carousel {
 
     transposeCarousel(): void {
         this.axis = this.axis == "X" ? "Y" : "X";
-        const radius = this.getRadius();
+        const radius = this.calcRadius(this.getCellWidth());
         this.target.style.transform = `translateZ(${-radius}px)`;
 
         this.rollCarousel();
