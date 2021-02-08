@@ -15,7 +15,7 @@ function radians(x) {
 }
 export class Carousel {
     constructor(settings) {
-        var _a, _b, _c, _d, _e, _f;
+        var _a, _b, _c, _d, _e, _f, _g;
         this.target = document.querySelector(settings.target);
         this.focusedCell = (_a = document.querySelector(settings.focusedCell)) !== null && _a !== void 0 ? _a : this.target.children[0];
         const func = (cell, i, angle) => {
@@ -24,9 +24,10 @@ export class Carousel {
         this.onfocus = (_b = settings.onfocus) !== null && _b !== void 0 ? _b : func;
         this.onunfocus = (_c = settings.onunfocus) !== null && _c !== void 0 ? _c : func;
         this.xTilt = (_d = settings.xTilt) !== null && _d !== void 0 ? _d : 10;
-        this.axis = (_e = settings.axis) !== null && _e !== void 0 ? _e : "Y";
+        this.zOffset = (_e = settings.zOffset) !== null && _e !== void 0 ? _e : 0;
+        this.axis = (_f = settings.axis) !== null && _f !== void 0 ? _f : "Y";
         this.index = 0;
-        this.margin = (_f = settings.margin) !== null && _f !== void 0 ? _f : 10;
+        this.margin = (_g = settings.margin) !== null && _g !== void 0 ? _g : 10;
     }
     getCellWidth() {
         if (this.axis == "X") {
@@ -48,9 +49,9 @@ export class Carousel {
         const radius = this.calcRadius(this.getCellWidth());
         const alpha = this.calcAngle();
         if (this.axis == "Y") {
-            const tiltYOffset = radius * Math.sin(radians(this.xTilt));
+            const tiltYOffset = (radius + this.zOffset) * Math.sin(radians(this.xTilt));
             Object.assign(this.target.style, {
-                transform: `translateY(-${tiltYOffset}px) rotateX(-${this.xTilt}deg)`
+                transform: `translateY(-${tiltYOffset}px) translateZ(${this.zOffset}px) rotateX(-${this.xTilt}deg)`
             });
         }
         Array.from(this.target.children).forEach((child, i) => {

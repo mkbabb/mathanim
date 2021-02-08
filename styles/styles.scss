@@ -22,39 +22,43 @@ video {
     padding: 0;
 }
 
+nav {
+    margin-top: 2rem;
+    display: flex;
+    background-color: black;
+    width: 100%;
+    height: fit-content;
+    justify-content: center;
+    border-radius: 0.25rem;
+
+    ul {
+        color: white;
+        display: flex;
+        justify-content: center;
+        flex-direction: row;
+        width: 100%;
+        height: 100%;
+        list-style: none;
+        margin: 0;
+        padding: 1rem;
+        list-style-position: inside;
+    }
+}
+
 #confetti {
     position: fixed;
     z-index: -1;
 }
 
+.title {
+}
+
 .page {
-    margin: 1rem;
     height: calc(100vh - 2rem);
     display: flex;
     justify-content: center;
-}
-
-.title {
-    display: flex;
-    justify-content: center;
     align-items: center;
-}
-
-.message-container {
-    align-items: center;
-    display: flex;
     flex-direction: column;
-    justify-content: center;
-    margin: 0;
-    position: absolute;
-    transform: translateY(-200%);
-    transition: transform cubic-bezier(0.09, 0.91, 0.5, 1.1) 700ms, opacity 1s;
-}
-
-.message {
-    color: black;
-    font-size: 2rem;
-    height: 2rem;
 }
 
 .btn {
@@ -66,7 +70,7 @@ video {
     display: flex;
     font-size: 1rem;
     justify-content: center;
-    padding: 1rem;
+    padding: 0.5rem 3rem;
     transition: bounce-bezier(background-color);
     font-family: "IBM Plex Mono", monospace;
 }
@@ -83,44 +87,27 @@ video {
     }
 }
 
-.controls {
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    margin: 0;
-    position: relative;
-    width: 100%;
-
-    #start-btn {
-        transition: bounce-bezier(translate, opacity);
-    }
-
-    .rotate-container {
-        display: flex;
-        flex-direction: row;
-        position: absolute;
-        transform: translateY(-200%);
-        opacity: 0;
-        transition: bounce-bezier(translate, opacity);
-    }
-}
-
 main {
     display: grid;
     justify-items: center;
-    row-gap: 2rem;
+    align-items: center;
+    row-gap: 1rem;
     height: 100%;
     width: 100%;
+
+    grid-template-rows: 1fr 0.25fr;
 
     .bottom-row {
         display: grid;
         justify-items: center;
         grid-template-areas: "left controls right";
+
         grid-template-columns: 1fr 1fr 1fr;
+
         height: 100%;
         width: 100%;
         column-gap: 2rem;
+        margin: 1rem;
 
         .controls {
             grid-area: controls;
@@ -141,15 +128,53 @@ main {
 
             transition: bounce-bezier(all);
             opacity: 0;
-            img {
-                --size: 15rem;
+            --size: 10rem;
 
-                height: var(--size);
-                width: var(--size);
+            height: var(--size);
+            width: var(--size);
+
+            img {
+                height: 100%;
+                width: 100%;
                 object-fit: cover;
                 object-position: center center;
             }
         }
+    }
+}
+
+.controls {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0;
+    position: relative;
+    width: 100%;
+
+    #start-btn {
+        transition: bounce-bezier(translate, opacity);
+    }
+
+    .rotate-container {
+        display: flex;
+        flex-direction: row;
+        @media screen and (max-width: 1000px) {
+            flex-direction: column;
+        }
+
+        position: absolute;
+        transform: translateY(-200%);
+        opacity: 0;
+        transition: bounce-bezier(translate, opacity);
+    }
+}
+
+.carousel-cell {
+    video {
+        height: 100%;
+        width: 100%;
+        border: none;
     }
 }
 

@@ -6,20 +6,21 @@
     transform-style: preserve-3d;
     transition: transform 1s;
 
-    --size: 50vw;
-    height: calc(var(--size) * 0.51);
+    --size: 75vw;
+    --height: calc(var(--size) * (9 / 16));
+
+    height: #{"min(var(--height), 75vh)"};
     width: var(--size);
 }
 
 .carousel-cell {
     align-items: center;
     background: white;
-    border: 2px solid black;
+    border: 5px black dashed;
     border-radius: 0.5rem;
     color: black;
     display: flex;
     justify-content: center;
-    opacity: 0.75;
     position: absolute;
     transition: transform cubic-bezier(0.09, 0.91, 0.5, 1.1) 700ms, opacity, border 1s;
     transform-style: preserve-3d;

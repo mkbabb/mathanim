@@ -1,5 +1,3 @@
-import { getOffset } from "../node_modules/@mkbabb/animation/src/utils.js";
-
 export function sleep(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
 }
@@ -22,6 +20,7 @@ interface CarouselSettings {
     margin?: number;
 
     xTilt?: number;
+    zOffset?: number;
 }
 
 export class Carousel {
@@ -34,7 +33,7 @@ export class Carousel {
     axis: string;
     index: number;
     margin: number;
-
+    zOffset: number;
     xTilt: number;
 
     constructor(settings: CarouselSettings) {
@@ -51,6 +50,7 @@ export class Carousel {
         this.onunfocus = settings.onunfocus ?? func;
 
         this.xTilt = settings.xTilt ?? 10;
+        this.zOffset = settings.zOffset ?? 0;
 
         this.axis = settings.axis ?? "Y";
         this.index = 0;
@@ -80,10 +80,10 @@ export class Carousel {
         const alpha = this.calcAngle();
 
         if (this.axis == "Y") {
-            const tiltYOffset = radius * Math.sin(radians(this.xTilt));
+            const tiltYOffset = (radius + this.zOffset) * Math.sin(radians(this.xTilt));
 
             Object.assign(this.target.style, {
-                transform: `translateY(-${tiltYOffset}px) rotateX(-${this.xTilt}deg)`
+                transform: `translateY(-${tiltYOffset}px) translateZ(${this.zOffset}px) rotateX(-${this.xTilt}deg)`
             });
         }
 

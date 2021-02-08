@@ -2,23 +2,17 @@ import { default as ConfettiGenerator } from "../node_modules/confetti-js/src/co
 
 import { Carousel, sleep } from "./carousel.js";
 
-import { smoothAnimate } from "../node_modules/@mkbabb/animation/src/animation.js";
+export function throttle(func: (...args: any) => void, wait = 1000) {
+    let enableCall = true;
 
-import { getOffset } from "../node_modules/@mkbabb/animation/src/utils.js";
+    return function (...args: any) {
+        if (!enableCall) return;
 
-import { easeInBounce } from "../node_modules/@mkbabb/animation/src/math.js";
-
-const title = document.querySelector<HTMLElement>(".title");
-smoothAnimate(
-    100,
-    0,
-    1000,
-    (v) => {
-        title.style.opacity = String(v);
-        return null;
-    },
-    easeInBounce
-);
+        enableCall = false;
+        func(...args);
+        setTimeout(() => (enableCall = true), wait);
+    };
+}
 
 const confettiSettings = { target: "confetti" };
 const confetti = new ConfettiGenerator(confettiSettings);
@@ -27,18 +21,26 @@ const carouselSettings = {
     target: "#carousel",
     xTilt: 20,
     margin: 20,
-    onfocus: (cell: HTMLVideoElement, i, angle) => {
+    zOffset: 0,
+    onfocus: (cell: HTMLElement, i, angle) => {
+        const video = cell.querySelector("video");
         cell.classList.add("focused");
-
-        cell.play();
+        video.play();
     },
-    onunfocus: (cell: HTMLVideoElement, i, angle) => {
+    onunfocus: (cell: HTMLElement, i, angle) => {
+        const video = cell.querySelector("video");
         cell.classList.remove("focused");
-
-        cell.pause();
+        video.pause();
     }
 };
 const carousel = new Carousel(carouselSettings);
+
+window.addEventListener(
+    "resize",
+    throttle(() => {
+        carousel.rollCarousel();
+    }, 100)
+);
 
 document.querySelector("#rotate-btn").addEventListener("mousedown", () => {
     carousel.rollCarousel();
