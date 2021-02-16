@@ -24,7 +24,7 @@ const confetti = new ConfettiGenerator(confettiSettings);
 const carouselSettings = {
     target: "#carousel",
     xTilt: 20,
-    margin: 20,
+    margin: 10,
     zOffset: 0,
     onfocus: (cell, i, angle) => {
         const video = cell.querySelector("video");
@@ -44,6 +44,11 @@ window.addEventListener("resize", throttle(() => {
 document.querySelector("#rotate-btn").addEventListener("mousedown", () => {
     carousel.rollCarousel();
 });
+window.addEventListener("keyup", function (event) {
+    if (event.key === "Enter") {
+        carousel.rollCarousel();
+    }
+});
 document.querySelector("#transpose-btn").addEventListener("mousedown", () => {
     carousel.transposeCarousel();
 });
@@ -56,16 +61,11 @@ document.getElementById("start-btn").addEventListener("click", (event) => __awai
         button.setAttribute("clicked", "true");
         confetti.render();
         Object.assign(button.style, {
-            display: "none"
+            transform: "translateY(-25%)",
+            opacity: "0"
         });
         Object.assign(document.querySelector(".rotate-container").style, {
             transform: "translateY(0%)",
-            opacity: "100%"
-        });
-        Object.assign(document.querySelector(".left").style, {
-            opacity: "100%"
-        });
-        Object.assign(document.querySelector(".right").style, {
             opacity: "100%"
         });
     }

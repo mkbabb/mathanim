@@ -1,48 +1,26 @@
-@use "sass:math";
-
-@function bounce-bezier($kind...) {
-    @return transform cubic-bezier(0.09, 0.91, 0.5, 1.1) 700ms, $kind 1s;
-}
+// @import url("animation.css");
+@import "animation";
 
 :root {
-    font-family: "IBM Plex Mono", monospace;
+    --font-family: "IBM Plex Mono", monospace;
     --color-1: #5b5ba4;
     --color-2: #ff3412;
-    // --color-3:
+}
+
+* {
+    font-family: var(--font-family);
 }
 
 body {
-    margin: 0;
-    height: 100%;
     width: 100%;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
 }
 
 video {
     margin: 0;
     padding: 0;
-}
-
-nav {
-    margin-top: 2rem;
-    display: flex;
-    background-color: black;
-    width: 100%;
-    height: fit-content;
-    justify-content: center;
-    border-radius: 0.25rem;
-
-    ul {
-        color: white;
-        display: flex;
-        justify-content: center;
-        flex-direction: row;
-        width: 100%;
-        height: 100%;
-        list-style: none;
-        margin: 0;
-        padding: 1rem;
-        list-style-position: inside;
-    }
 }
 
 #confetti {
@@ -51,13 +29,18 @@ nav {
 }
 
 .title {
+    margin: auto;
+    font-size: 3rem;
+    animation: up-n-fade 1000ms var(--bounce-in-ease);
 }
 
 .page {
-    height: calc(100vh - 2rem);
+    --padding: 1rem;
+    padding: var(--padding);
+    height: calc(100vh - 2 * var(--padding));
+    width: calc(100vw - 2 * var(--padding));
+
     display: flex;
-    justify-content: center;
-    align-items: center;
     flex-direction: column;
 }
 
@@ -70,9 +53,11 @@ nav {
     display: flex;
     font-size: 1rem;
     justify-content: center;
+    box-sizing: border-box;
     padding: 0.5rem 3rem;
     transition: bounce-bezier(background-color);
-    font-family: "IBM Plex Mono", monospace;
+
+    margin: 0;
 }
 
 .btn-prime {
@@ -89,84 +74,63 @@ nav {
 
 main {
     display: grid;
+    align-content: center;
     justify-items: center;
-    align-items: center;
+
+    grid-template-rows: 1fr 0.25fr;
     row-gap: 1rem;
+
     height: 100%;
     width: 100%;
 
-    grid-template-rows: 1fr 0.25fr;
+    .content {
+        --padding: 1rem;
+        --size: calc(100% - 2 * var(--padding));
+        padding: var(--padding);
+        height: var(--size);
+        width: var(--size);
+
+        align-self: end;
+        max-height: 800px;
+        max-width: 800px;
+    }
 
     .bottom-row {
+        align-self: start;
         display: grid;
-        justify-items: center;
-        grid-template-areas: "left controls right";
-
-        grid-template-columns: 1fr 1fr 1fr;
-
-        height: 100%;
+        grid-auto-flow: column;
         width: 100%;
-        column-gap: 2rem;
-        margin: 1rem;
-
-        .controls {
-            grid-area: controls;
-        }
-
-        .left {
-            grid-area: left;
-        }
-
-        .right {
-            grid-area: right;
-        }
-
-        .left,
-        .right {
-            display: grid;
-            justify-items: center;
-
-            transition: bounce-bezier(all);
-            opacity: 0;
-            --size: 10rem;
-
-            height: var(--size);
-            width: var(--size);
-
-            img {
-                height: 100%;
-                width: 100%;
-                object-fit: cover;
-                object-position: center center;
-            }
-        }
+        height: 100%;
+        justify-items: center;
+        transition: bounce-bezier(all);
     }
 }
 
 .controls {
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    margin: 0;
-    position: relative;
+    display: grid;
     width: 100%;
+    align-content: center;
+    justify-items: center;
+    align-items: center;
 
     #start-btn {
+        z-index: 1;
         transition: bounce-bezier(translate, opacity);
     }
 
     .rotate-container {
-        display: flex;
-        flex-direction: row;
-        @media screen and (max-width: 1000px) {
-            flex-direction: column;
+        @media screen and (min-width: 500px) {
+            grid-auto-flow: column;
         }
 
-        position: absolute;
-        transform: translateY(-200%);
-        opacity: 0;
+        z-index: 0;
+
+        display: grid;
+        gap: 0.25rem;
+
+        transform: translateY(-100%);
         transition: bounce-bezier(translate, opacity);
+        opacity: 0;
     }
 }
 
@@ -176,26 +140,4 @@ main {
         width: 100%;
         border: none;
     }
-}
-
-@keyframes box-float {
-    0% {
-        box-shadow: 0 5px 15px 0px rgba(0, 0, 0, 0.6);
-        transform: translateY(0px);
-    }
-
-    50% {
-        box-shadow: 0 25px 15px 0px rgba(0, 0, 0, 0.2);
-        transform: translateY(-20px);
-    }
-
-    100% {
-        box-shadow: 0 5px 15px 0px rgba(0, 0, 0, 0.6);
-        transform: translateY(0px);
-    }
-}
-
-.floating {
-    border-radius: 0.5rem;
-    animation: box-float 5s ease-in-out 0s infinite forwards;
 }

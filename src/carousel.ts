@@ -89,10 +89,15 @@ export class Carousel {
 
         Array.from(this.target.children).forEach((child: HTMLElement, i) => {
             const childAngle = alpha * (i - this.index);
+            const pos = this.axis === "Y" ? Math.cos(childAngle) : Math.sin(childAngle);
+            const t = (pos + 1) / 2;
+            const x = Math.pow(t, 1 / 4);
 
             const style = {
-                transform: `rotate${this.axis}(${childAngle}rad) translateZ(${radius}px)`
+                transform: `rotate${this.axis}(${childAngle}rad) translateZ(${radius}px)`,
+                opacity: `${x}`
             };
+
             Object.assign(child.style, style);
 
             if (i === this.index % cellCount) {

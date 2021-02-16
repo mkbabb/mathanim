@@ -5,15 +5,12 @@
     position: relative;
     transform-style: preserve-3d;
     transition: transform 1s;
-
-    --size: 75vw;
-    --height: calc(var(--size) * (9 / 16));
-
-    height: #{"min(var(--height), 75vh)"};
-    width: var(--size);
+    height: 100%;
+    width: 100%;
 }
 
 .carousel-cell {
+    box-sizing: border-box;
     align-items: center;
     background: white;
     border: 5px black dashed;

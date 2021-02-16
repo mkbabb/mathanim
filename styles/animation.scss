@@ -1,0 +1,19 @@
+:root {
+    --bounce-in-ease: cubic-bezier(0.09, 0.91, 0.5, 1.5);
+}
+
+@function bounce-bezier($kind...) {
+    @return transform var(--bounce-in-ease) 700ms, $kind 1s;
+}
+
+@keyframes up-n-fade {
+    0% {
+        transform: translateY(25vh);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
