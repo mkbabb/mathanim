@@ -15,18 +15,48 @@
             href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&display=swap"
             rel="stylesheet"
         />
+
+        <script
+            src="https://kit.fontawesome.com/f3238cd59c.js"
+            crossorigin="anonymous"
+        ></script>
     </head>
 
     <body>
         <canvas id="confetti"></canvas>
 
+        <header>
+            <span id="info-btn">
+                <i class="fas fa-info-circle"></i>
+            </span>
+        </header>
+
+        <div class="modal">
+            <h1 class="title">Fourier</h1>
+
+            <div class="image">
+                <div class="square-box">
+                    <img src="../assets/legendre.jpg" />
+                </div>
+                <div class="description">me als kind</div>
+            </div>
+
+            <section class="content">
+                <p>
+                    Hi! I'm Mike, and this little site is dedicated to displaying a few
+                    Fourier Epicycle animations I've made. All animations were made
+                    using a custom Python script I developed back in 2018 for a paper
+                    regarding harmonic analysis and image processing. You can find that
+                    repo here: link.
+                </p>
+            </section>
+        </div>
+
         <section class="page">
-            <!-- <nav>
-                <ul>
-                    <li>About</li>
-                </ul>
-            </nav> -->
-            <h1 class="title">Mathanim</h1>
+            <div class="title-main">
+                <h1>Mathanim</h1>
+                <i class="arrow bounce fas fa-arrow-down"></i>
+            </div>
         </section>
 
         <section class="page">
@@ -96,11 +126,6 @@
                 </section>
 
                 <section class="bottom-row">
-                    <!-- <div class="image">
-                        <img src="../assets/legendre.jpg" />
-                        <div class="description">Legendre</div>
-                    </div> -->
-
                     <div class="controls">
                         <button class="btn btn-prime" id="start-btn">Click</button>
 

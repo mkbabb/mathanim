@@ -44,6 +44,11 @@ window.addEventListener("resize", throttle(() => {
 document.querySelector("#rotate-btn").addEventListener("mousedown", () => {
     carousel.rollCarousel();
 });
+document.querySelector("#info-btn").addEventListener("mousedown", (ev) => {
+    const modal = document.querySelector(".modal");
+    modal.classList.toggle("active");
+    scrollTo(0, 0);
+});
 window.addEventListener("keyup", function (event) {
     if (event.key === "Enter") {
         carousel.rollCarousel();
